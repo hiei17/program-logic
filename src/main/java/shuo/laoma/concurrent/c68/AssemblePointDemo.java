@@ -15,8 +15,9 @@ public class AssemblePointDemo {
 				// 模拟先各自独立运行
 				Thread.sleep((int) (Math.random() * 1000));
 
-				// 集合
+				// 集合,没有都到这 是不会往下走的
 				ap.await();
+
 				System.out.println("arrived");
 				// ... 集合后执行其他操作
 			} catch (InterruptedException e) {

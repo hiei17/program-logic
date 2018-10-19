@@ -11,6 +11,7 @@ public class RacerWithLatchDemo {
 		@Override
 		public void run() {
 			try {
+				//全部先等着
 				this.latch.await();
 				System.out.println("start run "
 						+ Thread.currentThread().getName());
@@ -21,13 +22,18 @@ public class RacerWithLatchDemo {
 
 	public static void main(String[] args) throws InterruptedException {
 		int num = 10;
+
+		//这里计数只有1
 		MyLatch latch = new MyLatch(1);
+
 		Thread[] racers = new Thread[num];
 		for (int i = 0; i < num; i++) {
 			racers[i] = new Racer(latch);
 			racers[i].start();
 		}
 		Thread.sleep(1000);
+
+		//一起开始
 		latch.countDown();
 	}
 

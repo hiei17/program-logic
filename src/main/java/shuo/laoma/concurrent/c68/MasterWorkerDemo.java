@@ -15,6 +15,7 @@ public class MasterWorkerDemo {
 				// simulate working on task
 				Thread.sleep((int) (Math.random() * 1000));
 
+				//latch里面计数-1 ,如果到0了就notifyAll
 				this.latch.countDown();
 			} catch (InterruptedException e) {
 			}
@@ -29,7 +30,7 @@ public class MasterWorkerDemo {
 			workers[i] = new Worker(latch);
 			workers[i].start();
 		}
-		latch.await();
+		latch.await();//内部计数没到0就wait
 
 		System.out.println("collect worker results");
 	}

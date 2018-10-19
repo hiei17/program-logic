@@ -14,6 +14,7 @@ public class RacerWithCountDownLatch {
         @Override
         public void run() {
             try {
+				//全部先等着
                 this.latch.await();
                 System.out.println(getName()
                         + " start run "+System.currentTimeMillis());

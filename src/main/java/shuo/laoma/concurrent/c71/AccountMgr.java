@@ -5,8 +5,16 @@ import java.util.Random;
 public class AccountMgr {
     public static class NoEnoughMoneyException extends Exception {}
 
+    /**
+     *
+     * @param from 来账户
+     * @param to 去账户
+     * @param money 转账金额
+     * @throws NoEnoughMoneyException
+     */
     public static void transfer_deadlock(Account from, Account to, double money)
             throws NoEnoughMoneyException {
+        //如果相反的反向也在转,都拿到了第一个锁...都是在等另外一个锁就完了 死锁
         from.lock();
         try {
             to.lock();
@@ -61,6 +69,7 @@ public class AccountMgr {
             throws NoEnoughMoneyException {
         if (from.tryLock()) {
             try {
+                //拿不到就算了 放弃 把之前拿到的锁也放掉 不会死锁
                 if (to.tryLock()) {
                     try {
                         if (from.getMoney() >= money) {

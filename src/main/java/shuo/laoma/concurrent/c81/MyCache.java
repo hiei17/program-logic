@@ -7,11 +7,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class MyCache {
 
+	//数据存这
 	private Map<String, Object> map = new HashMap<>();
+
 	private ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 	private Lock readLock = readWriteLock.readLock();
 	private Lock writeLock = readWriteLock.writeLock();
 
+	//读要得读锁
 	public Object get(String key) {
 		readLock.lock();
 		try {
@@ -21,6 +24,7 @@ public class MyCache {
 		}
 	}
 
+	//写要写锁
 	public Object put(String key, Object value) {
 		writeLock.lock();
 		try {
